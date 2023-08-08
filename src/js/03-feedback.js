@@ -7,8 +7,10 @@ let storage='';
 let parsJson;
 if(localStorage.getItem("feedback-form-state")){
     parsJson=JSON.parse(localStorage.getItem("feedback-form-state"))
-    email.value=parsJson.email;
-    message.value=parsJson.message;
+    if (parsJson.email || parsJson.message) {
+        email.value=parsJson.email;
+        message.value=parsJson.message;
+    }
 }
 const  json={
 email:email.value,
@@ -20,15 +22,19 @@ form.addEventListener("submit",onSubmit)
 function onInput(){
     json.email=email.value
         json.message=message.value
-         console.log(json);
-         storage=JSON.stringify(json);
-         localStorage.setItem("feedback-form-state", storage)
-}
-function onSubmit(e){
-    e.preventDefault();
-    e.currentTarget.reset();
-    localStorage.removeItem("feedback-form-state");
-    console.log('submit')
+        storage=JSON.stringify(json);
+        localStorage.setItem("feedback-form-state", storage)
+    }
+    function onSubmit(e){
+        e.preventDefault();
+        if (json.email && json.message) {
+            e.currentTarget.reset();
+            localStorage.removeItem("feedback-form-state");
+            console.log(json);
+        }else{
+            alert('Заповніть усі поля')
+        }
+        
 }
 
 
