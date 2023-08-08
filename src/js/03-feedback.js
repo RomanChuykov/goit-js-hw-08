@@ -31,6 +31,8 @@ function onInput(){
             e.currentTarget.reset();
             localStorage.removeItem("feedback-form-state");
             console.log(json);
+            json.email='';
+            json.message='';
         }else{
             alert('Заповніть усі поля')
         }
